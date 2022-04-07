@@ -18,5 +18,5 @@ public class PeliculaDTO {
     private String fechaCreacion;
     private double calificacion;
     private Genero genero;
-    private List<PersonajeDTO> personajes = new ArrayList<>(); //porque lista DTO y no entidad ?
+    private List<PersonajeDTO> personajes ; //porque lista DTO y no entidad ?
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -16,5 +17,5 @@ public class PersonajeDTO {
     private Integer edad;
     private Double peso;
     private String historia;
-    private Set<Pelicula> peliculas = new HashSet<>();
+    private List<PeliculaDTO> peliculas ;
 }

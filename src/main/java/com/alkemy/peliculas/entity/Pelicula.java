@@ -23,11 +23,11 @@ public class Pelicula {
 
     private String titulo;
 
+    private double calificacion;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
-
-    private double calificacion;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "genero_id",referencedColumnName = "id")
