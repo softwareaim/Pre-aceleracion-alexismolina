@@ -21,6 +21,6 @@ public class Genero {
 
     private String imagen;
 
-    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "genero")
     private List<Pelicula> peliculas = new ArrayList<>();
 }

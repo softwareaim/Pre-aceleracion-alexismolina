@@ -4,12 +4,15 @@ import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.entity.Pelicula;
+import com.alkemy.peliculas.entity.Personaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@Component
 public class PeliculaMapper {
 
     @Autowired
@@ -29,14 +32,14 @@ public class PeliculaMapper {
     //se carga el genero?
     public PeliculaDTO peliculaEntity2DTO(Pelicula entity, Boolean loadPersonajes){
         PeliculaDTO dto = new PeliculaDTO();
-        dto.setId(dto.getId());
+        dto.setId(entity.getId());
         dto.setCalificacion(entity.getCalificacion());
         dto.setFechaCreacion(entity.getFechaCreacion().toString());
         dto.setImagen(entity.getImagen());
         dto.setTitulo(entity.getTitulo());
         dto.setGenero(entity.getGenero());/**/
         if(loadPersonajes){
-            List<PersonajeDTO> personajesDTO = this.personajeMapper.personajeEntityList2DTOList(entity.getPersonajes(),false);
+            List<PersonajeDTO> personajesDTO = this.personajeMapper.personajeEntityList2DTOList((List<Personaje>) entity.getPersonajes(),false);
             dto.setPersonajes(personajesDTO);
         }
         return dto;

@@ -2,16 +2,19 @@ package com.alkemy.peliculas.mapper;
 
 import com.alkemy.peliculas.dto.GeneroDTO;
 import com.alkemy.peliculas.entity.Genero;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class GerneroMapper {
 
     public Genero generoDTO2Entity(GeneroDTO dto){
         Genero entity = new Genero();
         entity.setId(dto.getId());
         entity.setImagen(dto.getImagen());
+        entity.setNombre(dto.getNombre());
         return entity;
     }
 
@@ -19,6 +22,7 @@ public class GerneroMapper {
         GeneroDTO dto = new GeneroDTO();
         dto.setId(entity.getId());
         dto.setImagen(entity.getImagen());
+        dto.setNombre(entity.getNombre());
         return dto;
     }
 
@@ -28,6 +32,14 @@ public class GerneroMapper {
             dtos.add(this.generoEntity2DTO(entity));
         }
         return dtos;
+    }
+
+    public List<Genero> generoDTOList2Entity(List<GeneroDTO> dtos){
+        List<Genero> entities = new ArrayList<>();
+        for(GeneroDTO dto : dtos){
+            entities.add(this.generoDTO2Entity(dto));
+        }
+        return entities;
     }
 
 }

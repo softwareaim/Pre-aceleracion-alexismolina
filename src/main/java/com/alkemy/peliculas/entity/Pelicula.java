@@ -7,7 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,11 +31,11 @@ public class Pelicula {
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "genero_id",referencedColumnName = "id")
     private Genero genero;
 
-    @ManyToMany(mappedBy = "peliculas",cascade = CascadeType.ALL)
-    private List<Personaje> personajes = new ArrayList<>();
+    @ManyToMany(mappedBy = "peliculas",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    private Set<Personaje> personajes = new HashSet<>();
 
 }
