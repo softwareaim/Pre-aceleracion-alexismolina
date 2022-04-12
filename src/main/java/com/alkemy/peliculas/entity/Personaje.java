@@ -27,9 +27,6 @@ public class Personaje {
 
     private String historia;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "personaje_pelicula",
-            joinColumns = @JoinColumn(name = "personaje_id"),
-            inverseJoinColumns = @JoinColumn(name = "pelicula_id"))
+    @ManyToMany(mappedBy = "personajes",cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     private Set<Pelicula> peliculas = new HashSet<>();
 }

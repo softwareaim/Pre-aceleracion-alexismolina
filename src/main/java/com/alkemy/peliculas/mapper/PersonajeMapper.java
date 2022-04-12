@@ -1,5 +1,6 @@
 package com.alkemy.peliculas.mapper;
 
+import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.entity.Pelicula;
@@ -7,9 +8,7 @@ import com.alkemy.peliculas.entity.Personaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class PersonajeMapper {
@@ -26,7 +25,8 @@ public class PersonajeMapper {
         entity.setHistoria(dto.getHistoria());
         entity.setPeso(dto.getPeso());
         // peliculas
-        Set<Pelicula> peliculas = this.peliculaMapper.peliculaDTOList2Entity(dto.getPeliculas());
+        Set<Pelicula> peliculas ;
+        peliculas = this.peliculaMapper.peliculaDTOList2Entity(dto.getPeliculas());
         entity.setPeliculas(peliculas);
         return entity;
     }
@@ -53,6 +53,36 @@ public class PersonajeMapper {
         }
         return dtos;
     }
+
+    public List<Personaje> personajeDTOList2EntityList(List<PersonajeDTO> dtos) {
+        List<Personaje> entities = new ArrayList<>();
+        Personaje p;
+        for(PersonajeDTO dto : dtos){
+            p = new Personaje();
+            p.setId(dto.getId());
+            p.setNombre(dto.getNombre());
+            p.setPeso(dto.getPeso());
+            p.setHistoria(dto.getHistoria());
+            p.setEdad(dto.getEdad());
+            p.setImagen(dto.getImagen());
+            entities.add(p);
+        }
+        return entities;
+    }
+
+//    public List<PeliculaBasicDTO> peliculaEntitySet2BasicDTOList(Collection<Pelicula> entities) {
+//        List<PeliculaBasicDTO> dtos = new ArrayList<>();
+//        PeliculaBasicDTO basicDTO;
+//        for (Pelicula entity : entities) {
+//            basicDTO = new PeliculaBasicDTO();
+//            basicDTO.setId(entity.getId());
+//            basicDTO.setImagen(entity.getImagen());
+//            basicDTO.setFechaCreacion(entity.getFechaCreacion().toString());
+//            basicDTO.setTiulo(entity.getTitulo());
+//            dtos.add(basicDTO);
+//        }
+//        return dtos;
+//    }
 
 
 }

@@ -25,6 +25,12 @@ public class PeliculaMapper {
         entity.setImagen(dto.getImagen());
         entity.setTitulo(dto.getTitulo());
         entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()));
+        entity.setGenero(dto.getGenero());
+        entity.setPersonajes(this.personajeMapper.personajeDTOList2EntityList(dto.getPersonajes()));
+//        for (PersonajeDTO pdto : dto.getPersonajes()) {
+//           entity.addPersonaje(this.personajeMapper.personajeDTO2Entity(pdto));
+//            System.out.println("HOLAAAAA");
+//        }
         return entity;
 
     }
@@ -39,7 +45,7 @@ public class PeliculaMapper {
         dto.setTitulo(entity.getTitulo());
         dto.setGenero(entity.getGenero());/**/
         if(loadPersonajes){
-            List<PersonajeDTO> personajesDTO = this.personajeMapper.personajeEntityList2DTOList((List<Personaje>) entity.getPersonajes(),false);
+            List<PersonajeDTO> personajesDTO = this.personajeMapper.personajeEntityList2DTOList(entity.getPersonajes(),false);
             dto.setPersonajes(personajesDTO);
         }
         return dto;

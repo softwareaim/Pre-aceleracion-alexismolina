@@ -1,13 +1,11 @@
 package com.alkemy.peliculas.dto;
 
 import com.alkemy.peliculas.entity.Genero;
-import com.alkemy.peliculas.entity.Personaje;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
