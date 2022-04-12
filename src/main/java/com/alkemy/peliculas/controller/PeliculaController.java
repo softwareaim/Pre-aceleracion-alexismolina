@@ -1,5 +1,6 @@
 package com.alkemy.peliculas.controller;
 
+import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.service.impl.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class PeliculaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PeliculaDTO> update(@PathVariable Long id, @RequestBody PeliculaDTO dto) {
+    public ResponseEntity<PeliculaDTO> update(@PathVariable Long id, @RequestBody PeliculaBasicDTO dto) {
         PeliculaDTO result = this.peliculaService.update(id, dto);
         return ResponseEntity.ok().body(result);
     }
