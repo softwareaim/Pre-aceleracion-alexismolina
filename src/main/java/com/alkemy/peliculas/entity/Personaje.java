@@ -2,6 +2,8 @@ package com.alkemy.peliculas.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,6 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "personajes")
+@SQLDelete(sql = "UPDATE personajes SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Personaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +30,8 @@ public class Personaje {
     private Double peso;
 
     private String historia;
+
+    private Boolean deleted = Boolean.FALSE;
 
     @ManyToMany(mappedBy = "personajes",cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     private Set<Pelicula> peliculas = new HashSet<>();

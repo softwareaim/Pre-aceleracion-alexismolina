@@ -2,21 +2,23 @@ package com.alkemy.peliculas.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 
 @Entity
 @Table(name = "peliculas")
+@SQLDelete(sql = "UPDATE peliculas SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,21 +30,22 @@ public class Pelicula {
 
     private double calificacion;
 
+    private Boolean deleted = Boolean.FALSE;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "genero_id",referencedColumnName = "id")
     private Genero genero;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "personaje_pelicula",
-              joinColumns = @JoinColumn(name = "personaje_id",nullable = false),
-    inverseJoinColumns = @JoinColumn(name = "pelicula_id",nullable = false),
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"personaje_id","pelicula_id"})})
+              joinColumns = @JoinColumn(name = "pelicula_id",nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "personaje_id",nullable = false),
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"pelicula_id","personaje_id"})})
     private List<Personaje> personajes = new ArrayList<>();
-
 
     public void addPersonaje(Personaje personaje){
         this.personajes.add(personaje);

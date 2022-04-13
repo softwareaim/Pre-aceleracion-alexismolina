@@ -3,10 +3,8 @@ package com.alkemy.peliculas.service;
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.entity.Pelicula;
-import com.alkemy.peliculas.entity.Personaje;
 import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
-import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.service.impl.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +39,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         return dtos;
     }
 
+    @Transactional
     @Override
     public PeliculaDTO update(Long idPelicula, PeliculaBasicDTO basicDTO) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
@@ -52,6 +51,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         return result;
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(id);

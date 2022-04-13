@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -15,6 +14,6 @@ public class PeliculaDTO {
     private String titulo;
     private String fechaCreacion;
     private double calificacion;
-    private Genero genero;
+    private GeneroDTO generoDTO;
     private List<PersonajeDTO> personajes ; //porque lista DTO y no entidad ?
 }

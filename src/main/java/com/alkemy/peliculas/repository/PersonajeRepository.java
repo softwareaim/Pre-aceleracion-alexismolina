@@ -1,9 +1,16 @@
 package com.alkemy.peliculas.repository;
 
 import com.alkemy.peliculas.entity.Personaje;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
-public interface PersonajeRepository extends JpaRepository<Personaje,Long> {
+@Repository
+public interface PersonajeRepository extends JpaRepository<Personaje,Long>, JpaSpecificationExecutor<Personaje> {
 
+    List<Personaje> findAll(Specification<Personaje> spec);
 }

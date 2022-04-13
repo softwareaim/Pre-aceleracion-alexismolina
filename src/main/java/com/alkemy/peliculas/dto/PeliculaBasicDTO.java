@@ -13,5 +13,5 @@ public class PeliculaBasicDTO {
     private String titulo;
     private String fechaCreacion;
     private double calificacion;
-    private Genero genero;
+    private GeneroDTO generoDTO;
 }

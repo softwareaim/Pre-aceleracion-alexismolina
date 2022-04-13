@@ -18,6 +18,9 @@ public class PeliculaMapper {
     @Autowired
     private PersonajeMapper personajeMapper;
 
+    @Autowired
+    private GerneroMapper gerneroMapper;
+
     public Pelicula peliculaDTO2Entity(PeliculaDTO dto) {
         Pelicula entity = new Pelicula();
         entity.setId(dto.getId());
@@ -25,17 +28,11 @@ public class PeliculaMapper {
         entity.setImagen(dto.getImagen());
         entity.setTitulo(dto.getTitulo());
         entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()));
-        entity.setGenero(dto.getGenero());
+        entity.setGenero(this.gerneroMapper.generoDTO2Entity(dto.getGeneroDTO()));
         entity.setPersonajes(this.personajeMapper.personajeDTOList2EntityList(dto.getPersonajes()));
-//        for (PersonajeDTO pdto : dto.getPersonajes()) {
-//           entity.addPersonaje(this.personajeMapper.personajeDTO2Entity(pdto));
-//            System.out.println("HOLAAAAA");
-//        }
         return entity;
-
     }
 
-    //se carga el genero?
     public PeliculaDTO peliculaEntity2DTO(Pelicula entity, Boolean loadPersonajes){
         PeliculaDTO dto = new PeliculaDTO();
         dto.setId(entity.getId());
@@ -43,7 +40,7 @@ public class PeliculaMapper {
         dto.setFechaCreacion(entity.getFechaCreacion().toString());
         dto.setImagen(entity.getImagen());
         dto.setTitulo(entity.getTitulo());
-        dto.setGenero(entity.getGenero());/**/
+        dto.setGeneroDTO(this.gerneroMapper.generoEntity2DTO(entity.getGenero()));
         if(loadPersonajes){
             List<PersonajeDTO> personajesDTO = this.personajeMapper.personajeEntityList2DTOList(entity.getPersonajes(),false);
             dto.setPersonajes(personajesDTO);
@@ -86,6 +83,7 @@ public class PeliculaMapper {
         LocalDate date = LocalDate.parse(stringDate,formatter);
         return date;
     }
+
     public void peliculaEntityRefreshValues(Pelicula entity, PeliculaBasicDTO dto){
         entity.setImagen(dto.getImagen());
         entity.setCalificacion(dto.getCalificacion());
@@ -93,19 +91,7 @@ public class PeliculaMapper {
         entity.setFechaCreacion(
                 this.string2LocalDate(dto.getFechaCreacion())
         );
-        entity.setGenero(dto.getGenero());//Se carga el genero en el update?
-    }
-
-    public Pelicula peliculaBasicDTO2entity(PeliculaBasicDTO dto){
-        Pelicula entity = new Pelicula();
-        entity.setImagen(dto.getImagen());
-        entity.setCalificacion(dto.getCalificacion());
-        entity.setTitulo(dto.getTitulo());
-        entity.setFechaCreacion(
-                this.string2LocalDate(dto.getFechaCreacion())
-        );
-        entity.setGenero(dto.getGenero());
-        return entity;
+        entity.setGenero(this.gerneroMapper.generoDTO2Entity(dto.getGeneroDTO()));//Se carga el genero en el update?
     }
 
 }

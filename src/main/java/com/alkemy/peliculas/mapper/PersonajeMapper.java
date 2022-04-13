@@ -2,6 +2,7 @@ package com.alkemy.peliculas.mapper;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
+import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.entity.Pelicula;
 import com.alkemy.peliculas.entity.Personaje;
@@ -70,4 +71,16 @@ public class PersonajeMapper {
         return entities;
     }
 
+    public List<PersonajeBasicDTO> personajeDTOList2BasicDTOList(List<PersonajeDTO> dtos) {
+        List<PersonajeBasicDTO> basicDTOS = new ArrayList<>();
+        PersonajeBasicDTO basicDTO;
+        for (PersonajeDTO dto : dtos) {
+            basicDTO = new PersonajeBasicDTO();
+            basicDTO.setId(dto.getId());
+            basicDTO.setNombre(dto.getNombre());
+            basicDTO.setImagen(dto.getImagen());
+            basicDTOS.add(basicDTO);
+        }
+        return basicDTOS;
+    }
 }
