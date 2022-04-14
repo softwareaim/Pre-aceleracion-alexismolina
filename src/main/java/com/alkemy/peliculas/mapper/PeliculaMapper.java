@@ -65,7 +65,7 @@ public class PeliculaMapper {
     }
 
     public List<PeliculaBasicDTO> peliculaEntitySet2BasicDTOList(Collection<Pelicula> entities) {
-        List<PeliculaBasicDTO> dtos = new ArrayList<>();
+        List<PeliculaBasicDTO> basicDTOS = new ArrayList<>();
         PeliculaBasicDTO basicDTO;
         for (Pelicula entity : entities) {
             basicDTO = new PeliculaBasicDTO();
@@ -73,9 +73,9 @@ public class PeliculaMapper {
             basicDTO.setImagen(entity.getImagen());
             basicDTO.setFechaCreacion(entity.getFechaCreacion().toString());
             basicDTO.setTitulo(entity.getTitulo());
-            dtos.add(basicDTO);
+            basicDTOS.add(basicDTO);
         }
-        return dtos;
+        return basicDTOS;
     }
 
     public LocalDate string2LocalDate(String stringDate) {
@@ -86,12 +86,10 @@ public class PeliculaMapper {
 
     public void peliculaEntityRefreshValues(Pelicula entity, PeliculaBasicDTO dto){
         entity.setImagen(dto.getImagen());
-        entity.setCalificacion(dto.getCalificacion());
         entity.setTitulo(dto.getTitulo());
         entity.setFechaCreacion(
                 this.string2LocalDate(dto.getFechaCreacion())
         );
-        entity.setGenero(this.gerneroMapper.generoDTO2Entity(dto.getGeneroDTO()));//Se carga el genero en el update?
     }
 
 }

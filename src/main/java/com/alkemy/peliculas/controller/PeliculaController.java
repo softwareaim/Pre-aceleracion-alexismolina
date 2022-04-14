@@ -17,10 +17,20 @@ public class PeliculaController {
     @Autowired
     private PeliculaService peliculaService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<PeliculaDTO>> getAll() {
         List<PeliculaDTO> dtos = this.peliculaService.getAll();
         return ResponseEntity.ok().body(dtos);
+    }
+
+    @GetMapping
+    ResponseEntity<List<PeliculaBasicDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false, defaultValue = "ASC") String order
+    ){
+        List<PeliculaBasicDTO> basicDTOS = this.peliculaService.getByFilters(name, genre, order);
+        return ResponseEntity.ok().body(basicDTOS);
     }
 
     @PostMapping

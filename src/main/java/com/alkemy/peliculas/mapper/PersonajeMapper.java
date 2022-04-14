@@ -71,14 +71,14 @@ public class PersonajeMapper {
         return entities;
     }
 
-    public List<PersonajeBasicDTO> personajeDTOList2BasicDTOList(List<PersonajeDTO> dtos) {
+    public List<PersonajeBasicDTO> personajeEntityList2BasicDTOList(List<Personaje> dtos) {
         List<PersonajeBasicDTO> basicDTOS = new ArrayList<>();
         PersonajeBasicDTO basicDTO;
-        for (PersonajeDTO dto : dtos) {
+        for (Personaje entity : dtos) {
             basicDTO = new PersonajeBasicDTO();
-            basicDTO.setId(dto.getId());
-            basicDTO.setNombre(dto.getNombre());
-            basicDTO.setImagen(dto.getImagen());
+            basicDTO.setId(entity.getId());
+            basicDTO.setNombre(entity.getNombre());
+            basicDTO.setImagen(entity.getImagen());
             basicDTOS.add(basicDTO);
         }
         return basicDTOS;

@@ -14,4 +14,6 @@ public interface PeliculaService {
     PeliculaDTO update(Long idPelicula, PeliculaBasicDTO dto);
 
     void delete(Long id);
+
+    List<PeliculaBasicDTO> getByFilters(String name, Long genre, String order);
 }

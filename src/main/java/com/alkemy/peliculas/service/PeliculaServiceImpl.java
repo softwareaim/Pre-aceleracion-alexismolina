@@ -2,9 +2,15 @@ package com.alkemy.peliculas.service;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
+import com.alkemy.peliculas.dto.PersonajeBasicDTO;
+import com.alkemy.peliculas.dto.PersonajeDTO;
+import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
+import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
 import com.alkemy.peliculas.entity.Pelicula;
+import com.alkemy.peliculas.entity.Personaje;
 import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
+import com.alkemy.peliculas.repository.specifications.PeliculaSpecification;
 import com.alkemy.peliculas.service.impl.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PeliculaServiceImpl implements PeliculaService {
@@ -21,6 +28,9 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Autowired
     private PeliculaRepository peliculaRepository;
+
+    @Autowired
+    private PeliculaSpecification peliculaSpecification;
 
     @Transactional
     @Override
@@ -58,7 +68,14 @@ public class PeliculaServiceImpl implements PeliculaService {
         if (entity.isPresent()) {
             this.peliculaRepository.delete(entity.get());
         }
+    }
 
-
+    @Transactional(readOnly = true)
+    @Override
+    public List<PeliculaBasicDTO> getByFilters(String name, Long genre, String order) {
+        PeliculaFiltersDTO filtersDTO = new PeliculaFiltersDTO(name, genre, order);
+        List<Pelicula> entities = this.peliculaRepository.findAll(this.peliculaSpecification.getByFilters(filtersDTO));
+        List<PeliculaBasicDTO> basicDTOS = this.peliculaMapper.peliculaEntitySet2BasicDTOList(entities);
+        return basicDTOS;
     }
 }

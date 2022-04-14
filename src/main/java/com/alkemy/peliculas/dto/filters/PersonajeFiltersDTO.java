@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.dto;
+package com.alkemy.peliculas.dto.filters;
 
 
 import lombok.Getter;
