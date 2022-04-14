@@ -4,6 +4,7 @@ import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
 import com.alkemy.peliculas.entity.Personaje;
+import com.alkemy.peliculas.exception.ParamNotFound;
 import com.alkemy.peliculas.mapper.PersonajeMapper;
 import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.repository.specifications.PersonajeSpecification;
@@ -50,10 +51,11 @@ public class PersonajeServiceImpl implements PersonajeService {
     public PersonajeDTO update(Long id, PersonajeDTO dto) {
         PersonajeDTO result = null;
         Optional<Personaje> entity = this.personajeRepository.findById(id);
-        if (entity.isPresent()) {
-            dto.setId(entity.get().getId());
-            result = this.save(dto);
+        if (!entity.isPresent()) {
+            new ParamNotFound("id personaje no valido");
         }
+        dto.setId(entity.get().getId());
+        result = this.save(dto);
         return result;
     }
 
@@ -61,10 +63,10 @@ public class PersonajeServiceImpl implements PersonajeService {
     @Override
     public void delete(Long id) {
         Optional<Personaje> entity = this.personajeRepository.findById(id);
-        if(entity.isPresent()){
-            this.personajeRepository.delete(entity.get());
+        if (!entity.isPresent()) {
+            new ParamNotFound("id personaje no valido");
         }
-
+        this.personajeRepository.delete(entity.get());
     }
 
     @Transactional(readOnly = true)

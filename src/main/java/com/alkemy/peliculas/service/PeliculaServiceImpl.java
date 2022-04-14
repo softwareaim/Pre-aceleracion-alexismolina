@@ -8,6 +8,7 @@ import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
 import com.alkemy.peliculas.entity.Pelicula;
 import com.alkemy.peliculas.entity.Personaje;
+import com.alkemy.peliculas.exception.ParamNotFound;
 import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
 import com.alkemy.peliculas.repository.specifications.PeliculaSpecification;
@@ -54,10 +55,11 @@ public class PeliculaServiceImpl implements PeliculaService {
     public PeliculaDTO update(Long idPelicula, PeliculaBasicDTO basicDTO) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
         PeliculaDTO result = null;
-        if (entity.isPresent()) {
-            this.peliculaMapper.peliculaEntityRefreshValues(entity.get(),basicDTO);
-            result = this.save(this.peliculaMapper.peliculaEntity2DTO(entity.get(),true));
+        if (!entity.isPresent()) {
+            throw new ParamNotFound("id pelicula no valido");
         }
+        this.peliculaMapper.peliculaEntityRefreshValues(entity.get(),basicDTO);
+        result = this.save(this.peliculaMapper.peliculaEntity2DTO(entity.get(),true));
         return result;
     }
 
@@ -65,9 +67,10 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Override
     public void delete(Long id) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(id);
-        if (entity.isPresent()) {
-            this.peliculaRepository.delete(entity.get());
+        if (!entity.isPresent()) {
+            throw new ParamNotFound("id pelicula no valido");
         }
+        this.peliculaRepository.delete(entity.get());
     }
 
     @Transactional(readOnly = true)
