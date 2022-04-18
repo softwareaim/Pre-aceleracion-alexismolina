@@ -7,6 +7,8 @@ import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
@@ -26,12 +28,14 @@ public class Pelicula {
 
     private String imagen;
 
+    @NotEmpty(message = "Ingrese un titulo")
     private String titulo;
 
     private double calificacion;
 
     private Boolean deleted = Boolean.FALSE;
 
+    @NotNull(message = "Ingrese una fecha de creacion")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;

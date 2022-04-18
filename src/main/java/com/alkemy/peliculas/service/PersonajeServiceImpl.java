@@ -40,6 +40,17 @@ public class PersonajeServiceImpl implements PersonajeService {
 
     @Transactional(readOnly = true)
     @Override
+    public PersonajeDTO findById(Long idPersonaje) {
+        Optional<Personaje> entity = this.personajeRepository.findById(idPersonaje);
+        if (!entity.isPresent()) {
+            new ParamNotFound("id personaje no valido");
+        }
+        PersonajeDTO dto = this.personajeMapper.personajeEntity2DTO(entity.get(), true);
+        return dto;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<PersonajeDTO> getAll() {
         List<Personaje> entities = this.personajeRepository.findAll();
         List<PersonajeDTO> dtos = this.personajeMapper.personajeEntityList2DTOList(entities, true);
@@ -49,24 +60,17 @@ public class PersonajeServiceImpl implements PersonajeService {
     @Transactional
     @Override
     public PersonajeDTO update(Long id, PersonajeDTO dto) {
-        PersonajeDTO result = null;
-        Optional<Personaje> entity = this.personajeRepository.findById(id);
-        if (!entity.isPresent()) {
-            new ParamNotFound("id personaje no valido");
-        }
-        dto.setId(entity.get().getId());
-        result = this.save(dto);
+        PersonajeDTO busquedaDto = this.findById(id);
+        dto.setId(busquedaDto.getId());
+        PersonajeDTO result = this.save(dto);
         return result;
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Optional<Personaje> entity = this.personajeRepository.findById(id);
-        if (!entity.isPresent()) {
-            new ParamNotFound("id personaje no valido");
-        }
-        this.personajeRepository.delete(entity.get());
+        Personaje entity = this.personajeMapper.personajeDTO2Entity(this.findById(id));
+        this.personajeRepository.delete(entity);
     }
 
     @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.builder;
 
 import com.alkemy.peliculas.dto.GeneroDTO;
 import com.alkemy.peliculas.entity.Genero;
