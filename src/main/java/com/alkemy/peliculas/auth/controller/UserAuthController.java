@@ -44,7 +44,7 @@ public class UserAuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> singIn(@Valid @RequestBody AuthenticationRequest authRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
 
         UserDetails userDetails;
         try {
