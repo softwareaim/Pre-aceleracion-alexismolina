@@ -45,9 +45,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             if (jwtUtils.validateToken(jwt, userDetails)) { // hace las validadaciones
                 UsernamePasswordAuthenticationToken authReq =
-                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
-                Authentication auth = authenticationManager.authenticate(authReq); // le digo a la unidad de spring q estoy autenticado
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(),null);
+//                Authentication auth = authenticationManager.authenticate(authReq); // le digo a la unidad de spring q estoy autenticado
+                SecurityContextHolder.getContext().setAuthentication(authReq);
             }
         }
         filterChain.doFilter(request, response);
