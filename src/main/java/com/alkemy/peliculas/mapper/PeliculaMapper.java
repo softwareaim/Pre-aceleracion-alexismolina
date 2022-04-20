@@ -4,13 +4,14 @@ import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.entity.Pelicula;
-import com.alkemy.peliculas.entity.Personaje;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
+
+import static com.alkemy.peliculas.mapper.util.UtilDate.string2LocalDate;
 
 @Component
 public class PeliculaMapper {
@@ -19,7 +20,7 @@ public class PeliculaMapper {
     private PersonajeMapper personajeMapper;
 
     @Autowired
-    private GerneroMapper gerneroMapper;
+    private GeneroMapper gerneroMapper;
 
     public Pelicula peliculaDTO2Entity(PeliculaDTO dto) {
         Pelicula entity = new Pelicula();
@@ -27,7 +28,7 @@ public class PeliculaMapper {
         entity.setCalificacion(dto.getCalificacion());
         entity.setImagen(dto.getImagen());
         entity.setTitulo(dto.getTitulo());
-        entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()));
+        entity.setFechaCreacion(string2LocalDate(dto.getFechaCreacion()));
         entity.setGenero(this.gerneroMapper.generoDTO2Entity(dto.getGeneroDTO()));
         entity.setPersonajes(this.personajeMapper.personajeDTOList2EntityList(dto.getPersonajes()));
         return entity;
@@ -78,17 +79,12 @@ public class PeliculaMapper {
         return basicDTOS;
     }
 
-    public LocalDate string2LocalDate(String stringDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(stringDate,formatter);
-        return date;
-    }
 
     public void peliculaEntityRefreshValues(Pelicula entity, PeliculaBasicDTO dto){
         entity.setImagen(dto.getImagen());
         entity.setTitulo(dto.getTitulo());
         entity.setFechaCreacion(
-                this.string2LocalDate(dto.getFechaCreacion())
+              string2LocalDate(dto.getFechaCreacion())
         );
     }
 

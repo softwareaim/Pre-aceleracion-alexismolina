@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class GerneroMapper {
+public class GeneroMapper {
 
     public Genero generoDTO2Entity(GeneroDTO dto){
         Genero entity = new Genero();
@@ -24,22 +24,6 @@ public class GerneroMapper {
         dto.setImagen(entity.getImagen());
         dto.setNombre(entity.getNombre());
         return dto;
-    }
-
-    public List<GeneroDTO> generoEntityList2DTOList(List<Genero> entities){
-        List<GeneroDTO> dtos = new ArrayList<>();
-        for(Genero entity : entities){
-            dtos.add(this.generoEntity2DTO(entity));
-        }
-        return dtos;
-    }
-
-    public List<Genero> generoDTOList2Entity(List<GeneroDTO> dtos){
-        List<Genero> entities = new ArrayList<>();
-        for(GeneroDTO dto : dtos){
-            entities.add(this.generoDTO2Entity(dto));
-        }
-        return entities;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.alkemy.peliculas.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -10,9 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
-
+@Data
 @Entity
 @Table(name = "personajes")
 @SQLDelete(sql = "UPDATE personajes SET deleted = true WHERE id=?")

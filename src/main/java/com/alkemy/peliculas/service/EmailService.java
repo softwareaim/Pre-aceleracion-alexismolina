@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service.impl;
+package com.alkemy.peliculas.service;
 
 public interface EmailService {
 

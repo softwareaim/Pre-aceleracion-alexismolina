@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class GeneroDTO {
     private Long id;
-    @NotEmpty(message = "Ingrese un nombre del genero")
+//    @NotEmpty(message = "Ingrese un nombre del genero")
     private String nombre;
     private String imagen;
 }

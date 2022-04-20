@@ -2,7 +2,7 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
-import com.alkemy.peliculas.service.impl.PeliculaService;
+import com.alkemy.peliculas.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,6 @@ public class PeliculaController {
 
     @Autowired
     private PeliculaService peliculaService;
-
-    @GetMapping("/all")
-    public ResponseEntity<List<PeliculaDTO>> getAll() {
-        List<PeliculaDTO> dtos = this.peliculaService.getAll();
-        return ResponseEntity.ok().body(dtos);
-    }
 
     @GetMapping
     ResponseEntity<List<PeliculaBasicDTO>> getDetailsByFilters(

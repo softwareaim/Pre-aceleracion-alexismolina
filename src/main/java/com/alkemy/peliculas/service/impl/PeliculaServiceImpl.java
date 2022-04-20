@@ -1,16 +1,18 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.service.impl;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
 import com.alkemy.peliculas.entity.Pelicula;
+import com.alkemy.peliculas.entity.Personaje;
 import com.alkemy.peliculas.exception.ParamNotFound;
 import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
+import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.repository.specifications.PeliculaSpecification;
-import com.alkemy.peliculas.service.impl.PeliculaService;
-import com.alkemy.peliculas.service.impl.PersonajeService;
+import com.alkemy.peliculas.service.PeliculaService;
+import com.alkemy.peliculas.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,12 +36,12 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Autowired
     private PersonajeService personajeService;
 
+    @Autowired
+    private PersonajeRepository personajeRepository;
+
     @Transactional
     @Override
     public PeliculaDTO save(PeliculaDTO dto) {
-        if (dto.getCalificacion() > 5 && dto.getCalificacion() < 0) {
-            throw new ParamNotFound("Ingrese una calificacion valida 0 a 5");
-        }
         Pelicula entity = this.peliculaMapper.peliculaDTO2Entity(dto);
         Pelicula entitySaved = this.peliculaRepository.save(entity);
         PeliculaDTO result = this.peliculaMapper.peliculaEntity2DTO(entitySaved, true);
@@ -68,17 +70,25 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Transactional
     @Override
     public PeliculaDTO update(Long idPelicula, PeliculaBasicDTO basicDTO) {
-        Pelicula entity = this.peliculaMapper.peliculaDTO2Entity(this.findById(idPelicula));
-        this.peliculaMapper.peliculaEntityRefreshValues(entity, basicDTO);
-        PeliculaDTO result = this.save(this.peliculaMapper.peliculaEntity2DTO(entity, true));
+        Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
+        if (entity.isPresent()) {
+            throw new ParamNotFound("Pelicula no encontrada");
+        }
+        this.peliculaMapper.peliculaEntityRefreshValues(entity.get(), basicDTO);
+        Pelicula entitySaved = this.peliculaRepository.save(entity.get());
+        PeliculaDTO result = this.peliculaMapper.peliculaEntity2DTO(entitySaved, true);
         return result;
     }
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        Pelicula entity = this.peliculaMapper.peliculaDTO2Entity(this.findById(id));
-        this.peliculaRepository.delete(entity);
+    public void delete(Long idPelicula) {
+        Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
+        if (entity.isPresent()) {
+            throw new ParamNotFound("Pelicula no encontrada");
+        }
+        this.peliculaRepository.delete(entity.get());
+
     }
 
     @Transactional(readOnly = true)
@@ -93,29 +103,39 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Override
     public PeliculaDTO addCharacter(Long idPelicula, Long idPersonaje) {
 
-        PeliculaDTO peliculaDto = this.findById(idPelicula);
-        PersonajeDTO personajeDto = this.personajeService.findById(idPersonaje);
-        if(peliculaDto.getPersonajes().contains(personajeDto)){
-            throw new ParamNotFound("Ya contiene este personaje");
+        Personaje entityPersonaje = personajeRepository.findById(idPersonaje).orElse(null);
+        Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
+
+        if (entityPersonaje == null || entityPelicula == null || entityPelicula.getPersonajes().contains(entityPersonaje) ) {
+            throw new ParamNotFound("Error al agregar personaje");
         }
-        peliculaDto.getPersonajes().add(personajeDto);
-        PeliculaDTO result = this.save(peliculaDto);
+        entityPelicula.getPersonajes().add(entityPersonaje);
+
+        Pelicula entitySaved = peliculaRepository.save(entityPelicula);
+        PeliculaDTO result = peliculaMapper.peliculaEntity2DTO(entitySaved, true);
+
         return result;
     }
 
     @Override
     public PeliculaDTO removeCharacter(Long idPelicula, Long idPersonaje) {
-        PeliculaDTO peliculaDto = this.findById(idPelicula);
-        PersonajeDTO personajeDto = this.personajeService.findById(idPersonaje);
-        List<PersonajeDTO> personajeDTOList = peliculaDto.getPersonajes();
-        Iterator<PersonajeDTO> it = personajeDTOList.iterator();
-        while (it.hasNext()){
-            if(it.next().getId() == personajeDto.getId()){
+
+        Personaje entityPersonaje = personajeRepository.findById(idPersonaje).orElse(null);
+        Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
+
+        if (entityPersonaje == null || entityPelicula == null) {
+            throw new ParamNotFound("Error al remover personaje");
+        }
+
+        Iterator<Personaje> it = entityPelicula.getPersonajes().iterator();
+        while (it.hasNext()) {
+            if (it.next().equals(entityPersonaje)) {
                 it.remove();
             }
         }
-        PeliculaDTO result = this.save(peliculaDto);
-
+        Pelicula entitySaved = peliculaRepository.save(entityPelicula);
+        PeliculaDTO result = peliculaMapper.peliculaEntity2DTO(entitySaved, true);
         return result;
+
     }
 }

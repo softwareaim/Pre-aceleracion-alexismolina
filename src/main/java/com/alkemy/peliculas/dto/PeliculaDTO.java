@@ -1,15 +1,13 @@
 package com.alkemy.peliculas.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
-@Getter
-@Setter
+@Data
 public class PeliculaDTO {
     private Long id;
     private String imagen;
@@ -17,7 +15,9 @@ public class PeliculaDTO {
     private String titulo;
     @NotNull(message = "Ingrese una fecha de creacion")
     private String fechaCreacion;
+    @Range(min = 0, max = 5, message = "el rango de calificacion deber ser entre 0 y 5")
     private double calificacion;
-    private GeneroDTO generoDTO;
-    private List<PersonajeDTO> personajes ; //porque lista DTO y no entidad ?
+    @NotNull(message ="Error al traer el genero")
+    private GeneroDTO genero;
+    private List<PersonajeDTO> personajes;
 }

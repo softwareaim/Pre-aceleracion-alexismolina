@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/auth")
@@ -49,7 +50,7 @@ public class UserAuthController {
         UserDetails userDetails;
         try {
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword(), Collections.EMPTY_LIST)
             );
             userDetails = (UserDetails) auth.getPrincipal();
         } catch (BadCredentialsException e) {

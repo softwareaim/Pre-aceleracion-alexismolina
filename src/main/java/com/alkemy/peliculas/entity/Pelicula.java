@@ -1,9 +1,10 @@
 package com.alkemy.peliculas.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,8 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 
 @Entity
 @Table(name = "peliculas")
@@ -31,6 +31,7 @@ public class Pelicula {
     @NotEmpty(message = "Ingrese un titulo")
     private String titulo;
 
+    @Range(min = 0, max = 5, message = "el rango de calificacion deber ser entre 0 y 5")
     private double calificacion;
 
     private Boolean deleted = Boolean.FALSE;

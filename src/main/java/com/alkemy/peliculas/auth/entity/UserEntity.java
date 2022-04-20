@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -22,6 +23,12 @@ public class UserEntity implements UserDetails {
 
     @NotEmpty(message = "Ingrese un password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"),
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "role_id"})})
+    private Set<RoleEntity> roles;
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;

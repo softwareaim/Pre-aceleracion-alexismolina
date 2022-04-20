@@ -4,7 +4,7 @@ import com.alkemy.peliculas.auth.dto.UserDTO;
 import com.alkemy.peliculas.auth.entity.UserEntity;
 import com.alkemy.peliculas.auth.repository.UserRepositiry;
 import com.alkemy.peliculas.exception.ParamNotFound;
-import com.alkemy.peliculas.service.impl.EmailService;
+import com.alkemy.peliculas.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service.impl;
+package com.alkemy.peliculas.service;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;

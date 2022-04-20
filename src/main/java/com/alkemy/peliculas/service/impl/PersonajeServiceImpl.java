@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.service.impl;
 
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
@@ -8,7 +8,7 @@ import com.alkemy.peliculas.exception.ParamNotFound;
 import com.alkemy.peliculas.mapper.PersonajeMapper;
 import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.repository.specifications.PersonajeSpecification;
-import com.alkemy.peliculas.service.impl.PersonajeService;
+import com.alkemy.peliculas.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
