@@ -12,4 +12,7 @@ public class PersonajeBasicDTO {
     @NotEmpty(message = "Ingrese un nombre")
     private String nombre;
     private String imagen;
+    private Integer edad;
+    private Double peso;
+    private String historia;
 }

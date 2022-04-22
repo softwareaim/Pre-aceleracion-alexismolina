@@ -5,6 +5,7 @@ import com.alkemy.peliculas.auth.dto.AuthenticationResponse;
 import com.alkemy.peliculas.auth.dto.UserDTO;
 import com.alkemy.peliculas.auth.service.JwtUtils;
 import com.alkemy.peliculas.auth.service.UserDetailsCustomService;
+import com.alkemy.peliculas.error.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,21 +42,22 @@ public class UserAuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> singUp(@Valid @RequestBody UserDTO user) throws Exception {
+
         this.userDetailsCustomService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest){
 
         UserDetails userDetails;
         try {
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword(), Collections.EMPTY_LIST)
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
             userDetails = (UserDetails) auth.getPrincipal();
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new ForbiddenException("Incorrect username or password");
         }
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 
@@ -56,7 +57,21 @@ public class Pelicula {
         this.personajes.add(personaje);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pelicula pelicula = (Pelicula) o;
+
+        if (Double.compare(pelicula.calificacion, calificacion) != 0) return false;
+        if (!Objects.equals(id, pelicula.id)) return false;
+        return Objects.equals(personajes, pelicula.personajes);
+    }
+
+
     public void removePersonaje(Personaje personaje){
         this.personajes.remove(personaje);
+
     }
 }

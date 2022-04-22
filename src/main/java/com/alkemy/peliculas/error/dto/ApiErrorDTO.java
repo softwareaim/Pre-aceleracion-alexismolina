@@ -1,13 +1,14 @@
-package com.alkemy.peliculas.dto.error;
+package com.alkemy.peliculas.error.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ApiErrorDTO {
 
     private HttpStatus status;

@@ -15,7 +15,7 @@ public interface PersonajeService {
 
     List<PersonajeDTO> getAll();
 
-    PersonajeDTO update(Long id ,PersonajeDTO dto);
+    PersonajeDTO update(Long id ,PersonajeBasicDTO dto);
 
     void delete(Long id);
 

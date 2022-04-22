@@ -2,11 +2,10 @@ package com.alkemy.peliculas.service.impl;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
-import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
 import com.alkemy.peliculas.entity.Pelicula;
 import com.alkemy.peliculas.entity.Personaje;
-import com.alkemy.peliculas.exception.ParamNotFound;
+import com.alkemy.peliculas.error.exception.NotFoundException;
 import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
 import com.alkemy.peliculas.repository.PersonajeRepository;
@@ -19,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -53,7 +53,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     public PeliculaDTO findById(Long idPelicula) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
         if (!entity.isPresent()) {
-            throw new ParamNotFound("id pelicula no valido");
+            throw new NotFoundException("id pelicula no valido");
         }
         PeliculaDTO dto = this.peliculaMapper.peliculaEntity2DTO(entity.get(), true);
         return dto;
@@ -72,7 +72,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     public PeliculaDTO update(Long idPelicula, PeliculaBasicDTO basicDTO) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
         if (entity.isPresent()) {
-            throw new ParamNotFound("Pelicula no encontrada");
+            throw new NotFoundException("Pelicula no encontrada");
         }
         this.peliculaMapper.peliculaEntityRefreshValues(entity.get(), basicDTO);
         Pelicula entitySaved = this.peliculaRepository.save(entity.get());
@@ -85,7 +85,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     public void delete(Long idPelicula) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
         if (entity.isPresent()) {
-            throw new ParamNotFound("Pelicula no encontrada");
+            throw new NoSuchElementException("Pelicula no encontrada");
         }
         this.peliculaRepository.delete(entity.get());
 
@@ -107,7 +107,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
         if (entityPersonaje == null || entityPelicula == null || entityPelicula.getPersonajes().contains(entityPersonaje) ) {
-            throw new ParamNotFound("Error al agregar personaje");
+            throw new NotFoundException("Error al agregar personaje");
         }
         entityPelicula.getPersonajes().add(entityPersonaje);
 
@@ -124,7 +124,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
         if (entityPersonaje == null || entityPelicula == null) {
-            throw new ParamNotFound("Error al remover personaje");
+            throw new NotFoundException("Error al remover personaje");
         }
 
         Iterator<Personaje> it = entityPelicula.getPersonajes().iterator();

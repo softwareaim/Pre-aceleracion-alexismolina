@@ -6,8 +6,10 @@ import com.alkemy.peliculas.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -30,15 +32,17 @@ public class PersonajeController {
     }
 
     @PostMapping
-    ResponseEntity<PersonajeDTO> save(@RequestBody PersonajeDTO dto){
-        PersonajeDTO result = this.personajeService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    ResponseEntity<PersonajeDTO> save(@Valid @RequestBody PersonajeDTO dto){
+
+        PersonajeDTO personajeDTO = this.personajeService.save(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(personajeDTO);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<PersonajeDTO> update(@PathVariable Long id, @RequestBody PersonajeDTO dto){
-        PersonajeDTO result = this.personajeService.update(id, dto);
-        return ResponseEntity.ok().body(result);
+    ResponseEntity<PersonajeDTO> update(@Valid @PathVariable Long id, @RequestBody PersonajeBasicDTO basicDTO){
+
+        PersonajeDTO personajeDTO = this.personajeService.update(id, basicDTO);
+        return ResponseEntity.ok().body(personajeDTO);
     }
 
     @DeleteMapping("/{id}")

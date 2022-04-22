@@ -4,7 +4,7 @@ import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
 import com.alkemy.peliculas.entity.Personaje;
-import com.alkemy.peliculas.exception.ParamNotFound;
+import com.alkemy.peliculas.error.exception.NotFoundException;
 import com.alkemy.peliculas.mapper.PersonajeMapper;
 import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.repository.specifications.PersonajeSpecification;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class PersonajeServiceImpl implements PersonajeService {
     public PersonajeDTO findById(Long idPersonaje) {
         Optional<Personaje> entity = this.personajeRepository.findById(idPersonaje);
         if (!entity.isPresent()) {
-            new ParamNotFound("id personaje no valido");
+            new NotFoundException("id personaje no valido");
         }
         PersonajeDTO dto = this.personajeMapper.personajeEntity2DTO(entity.get(), true);
         return dto;
@@ -59,18 +60,26 @@ public class PersonajeServiceImpl implements PersonajeService {
 
     @Transactional
     @Override
-    public PersonajeDTO update(Long id, PersonajeDTO dto) {
-        PersonajeDTO busquedaDto = this.findById(id);
-        dto.setId(busquedaDto.getId());
-        PersonajeDTO result = this.save(dto);
+    public PersonajeDTO update(Long idPersonaje, PersonajeBasicDTO basicDTO) {
+        Optional<Personaje> entity = this.personajeRepository.findById(idPersonaje);
+        if (!entity.isPresent()) {
+            new NotFoundException("id personaje no valido");
+        }
+        this.personajeMapper.personajeEntityRefreshValues(entity.get(), basicDTO);
+
+        Personaje entitySaved = personajeRepository.save(entity.get());
+        PersonajeDTO result = this.personajeMapper.personajeEntity2DTO(entitySaved,true);
         return result;
     }
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        Personaje entity = this.personajeMapper.personajeDTO2Entity(this.findById(id));
-        this.personajeRepository.delete(entity);
+    public void delete(Long idPersonaje) {
+        Optional<Personaje> entity = this.personajeRepository.findById(idPersonaje);
+        if (!entity.isPresent()) {
+            new NotFoundException("id personaje no valido");
+        }
+        this.personajeRepository.delete(entity.get());
     }
 
     @Transactional(readOnly = true)

@@ -5,9 +5,10 @@ import com.alkemy.peliculas.service.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/generes")
@@ -17,9 +18,10 @@ public class GeneroController {
     GeneroService generoService;
 
     @PostMapping
-    ResponseEntity<GeneroDTO> save(@RequestBody GeneroDTO dto){
-        GeneroDTO result = this.generoService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    ResponseEntity<GeneroDTO> save(@Valid @RequestBody GeneroDTO dto){
+
+        GeneroDTO generoDTO = this.generoService.save(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(generoDTO);
     }
 
 }

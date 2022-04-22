@@ -17,7 +17,7 @@ public class PeliculaDTO {
     private String fechaCreacion;
     @Range(min = 0, max = 5, message = "el rango de calificacion deber ser entre 0 y 5")
     private double calificacion;
-    @NotNull(message ="Error al traer el genero")
+    @NotNull(message ="Error genero")
     private GeneroDTO genero;
     private List<PersonajeDTO> personajes;
 }

@@ -36,4 +36,5 @@ public class Personaje {
 
     @ManyToMany(mappedBy = "personajes",cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     private Set<Pelicula> peliculas = new HashSet<>();
+
 }

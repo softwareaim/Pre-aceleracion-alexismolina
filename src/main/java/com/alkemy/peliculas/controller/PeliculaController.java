@@ -6,6 +6,7 @@ import com.alkemy.peliculas.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,8 +31,9 @@ public class PeliculaController {
 
     @PostMapping
     public ResponseEntity<PeliculaDTO> save(@Valid @RequestBody PeliculaDTO dto) throws Exception {
-        PeliculaDTO result = this.peliculaService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+
+        PeliculaDTO peliculaDTO = this.peliculaService.save(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(peliculaDTO);
     }
 
     @PostMapping("/{idMovie}/characters/{idCharacter}")
@@ -42,9 +44,11 @@ public class PeliculaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PeliculaDTO> update(@PathVariable Long id,@Valid @RequestBody PeliculaBasicDTO dto)throws Exception {
-        PeliculaDTO result = this.peliculaService.update(id, dto);
-        return ResponseEntity.ok().body(result);
+    public ResponseEntity<PeliculaDTO> update(@Valid @RequestBody PeliculaBasicDTO dto,
+                                              BindingResult result,
+                                              @PathVariable Long id){
+        PeliculaDTO peliculaDTO = this.peliculaService.update(id, dto);
+        return ResponseEntity.ok().body(peliculaDTO);
     }
 
     @DeleteMapping("/{id}")

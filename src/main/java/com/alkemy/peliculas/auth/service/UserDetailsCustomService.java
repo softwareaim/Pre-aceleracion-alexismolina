@@ -3,7 +3,6 @@ package com.alkemy.peliculas.auth.service;
 import com.alkemy.peliculas.auth.dto.UserDTO;
 import com.alkemy.peliculas.auth.entity.UserEntity;
 import com.alkemy.peliculas.auth.repository.UserRepositiry;
-import com.alkemy.peliculas.exception.ParamNotFound;
 import com.alkemy.peliculas.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -36,22 +35,20 @@ public class UserDetailsCustomService implements UserDetailsService {
     }
 
     @Transactional()
-    public boolean save(UserDTO userDto) {
+    public boolean save(UserDTO userDto) throws Exception {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encriptada = passwordEncoder.encode(userDto.getPassword());
 
-        Boolean flag = passwordEncoder.matches(userDto.getPassword(),encriptada);
+        boolean flag = passwordEncoder.matches(userDto.getPassword(),encriptada);
         if (!flag){
-            throw new ParamNotFound("Error de encriptacion");
+            throw new Exception("Error de encryption");
         }
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDto.getUsername());
         userEntity.setPassword(encriptada);
         UserEntity userResult;
         userResult = this.userRepositiry.save(userEntity);
-        if (userResult != null) {
-            emailService.sendWelcomeEmailTo(userEntity.getUsername());
-        }
+        emailService.sendWelcomeEmailTo(userEntity.getUsername());
         return userResult != null;
 
     }

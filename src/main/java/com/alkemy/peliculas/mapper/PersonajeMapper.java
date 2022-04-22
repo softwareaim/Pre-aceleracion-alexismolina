@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+import static com.alkemy.peliculas.mapper.util.UtilDate.string2LocalDate;
+
 @Component
 public class PersonajeMapper {
 
@@ -82,5 +84,14 @@ public class PersonajeMapper {
             basicDTOS.add(basicDTO);
         }
         return basicDTOS;
+    }
+    public void personajeEntityRefreshValues(Personaje entity, PersonajeBasicDTO dto){
+        entity.setImagen(dto.getImagen());
+        entity.setNombre(dto.getNombre());
+        entity.setId(dto.getId());
+        entity.setEdad(dto.getEdad());
+        entity.setHistoria(dto.getHistoria());
+        entity.setPeso(dto.getPeso());
+
     }
 }
