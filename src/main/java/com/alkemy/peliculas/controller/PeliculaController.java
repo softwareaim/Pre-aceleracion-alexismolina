@@ -2,7 +2,8 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
-import com.alkemy.peliculas.service.PeliculaService;
+import com.alkemy.peliculas.controller.service.PeliculaService;
+import com.alkemy.peliculas.error.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,11 @@ public class PeliculaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PeliculaDTO> update(@Valid @RequestBody PeliculaBasicDTO dto,
-                                              BindingResult result,
+    public ResponseEntity<PeliculaDTO> update(@Valid @RequestBody PeliculaBasicDTO dto,BindingResult result,
                                               @PathVariable Long id){
+        if(result.hasErrors()){
+            throw new BadRequestException(result);
+        }
         PeliculaDTO peliculaDTO = this.peliculaService.update(id, dto);
         return ResponseEntity.ok().body(peliculaDTO);
     }

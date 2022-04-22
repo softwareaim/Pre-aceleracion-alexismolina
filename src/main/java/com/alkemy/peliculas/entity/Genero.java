@@ -21,7 +21,7 @@ public class Genero {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ingrese un nombre del genero")
+    @NotEmpty
     private String nombre;
 
     private String imagen;

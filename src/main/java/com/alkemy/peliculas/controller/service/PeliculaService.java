@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.controller.service;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
@@ -8,10 +8,6 @@ import java.util.List;
 public interface PeliculaService {
 
     PeliculaDTO save(PeliculaDTO dto);
-
-    PeliculaDTO findById(Long idPelicula);
-
-    List<PeliculaDTO> getAll();
 
     PeliculaDTO update(Long idPelicula, PeliculaBasicDTO dto);
 

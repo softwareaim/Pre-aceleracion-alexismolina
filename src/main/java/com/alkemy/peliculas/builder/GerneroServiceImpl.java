@@ -4,13 +4,10 @@ import com.alkemy.peliculas.dto.GeneroDTO;
 import com.alkemy.peliculas.entity.Genero;
 import com.alkemy.peliculas.mapper.GeneroMapper;
 import com.alkemy.peliculas.repository.GeneroRepository;
-import com.alkemy.peliculas.service.GeneroService;
+import com.alkemy.peliculas.controller.service.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GerneroServiceImpl implements GeneroService {

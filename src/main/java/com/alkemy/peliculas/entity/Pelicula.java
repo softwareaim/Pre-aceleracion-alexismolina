@@ -29,15 +29,15 @@ public class Pelicula {
 
     private String imagen;
 
-    @NotEmpty(message = "Ingrese un titulo")
+    @NotEmpty
     private String titulo;
 
-    @Range(min = 0, max = 5, message = "el rango de calificacion deber ser entre 0 y 5")
+    @Range(min = 0, max = 5)
     private double calificacion;
 
     private Boolean deleted = Boolean.FALSE;
 
-    @NotNull(message = "Ingrese una fecha de creacion")
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;

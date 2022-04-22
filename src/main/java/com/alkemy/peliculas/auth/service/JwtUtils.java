@@ -4,6 +4,7 @@ package com.alkemy.peliculas.auth.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cglib.core.internal.Function;// o jdk
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ import java.util.Map;
 @Service
 public class JwtUtils {
 
-    private String SECRET_KEY = "secret";
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
     
     public String extractUsername(String token){return extractClaim(token, Claims::getSubject);}
     

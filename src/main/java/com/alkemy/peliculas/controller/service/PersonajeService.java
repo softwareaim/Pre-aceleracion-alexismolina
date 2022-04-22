@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.controller.service;
 
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
@@ -10,10 +10,6 @@ import java.util.Set;
 public interface PersonajeService {
 
     PersonajeDTO save(PersonajeDTO dto);
-
-    PersonajeDTO findById(Long idPersonaje);
-
-    List<PersonajeDTO> getAll();
 
     PersonajeDTO update(Long id ,PersonajeBasicDTO dto);
 

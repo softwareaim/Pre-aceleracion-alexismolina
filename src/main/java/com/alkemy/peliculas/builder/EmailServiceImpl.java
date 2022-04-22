@@ -1,6 +1,6 @@
 package com.alkemy.peliculas.builder;
 
-import com.alkemy.peliculas.service.EmailService;
+import com.alkemy.peliculas.controller.service.EmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;

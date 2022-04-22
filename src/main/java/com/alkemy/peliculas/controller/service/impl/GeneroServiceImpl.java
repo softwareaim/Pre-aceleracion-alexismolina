@@ -1,10 +1,10 @@
-package com.alkemy.peliculas.service.impl;
+package com.alkemy.peliculas.controller.service.impl;
 
+import com.alkemy.peliculas.controller.service.GeneroService;
 import com.alkemy.peliculas.dto.GeneroDTO;
 import com.alkemy.peliculas.entity.Genero;
 import com.alkemy.peliculas.mapper.GeneroMapper;
 import com.alkemy.peliculas.repository.GeneroRepository;
-import com.alkemy.peliculas.service.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class GeneroServiceImpl implements GeneroService {

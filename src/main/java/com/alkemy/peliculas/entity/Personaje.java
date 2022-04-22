@@ -21,7 +21,7 @@ public class Personaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ingrese un nombre")
+    @NotEmpty
     private String nombre;
 
     private String imagen;

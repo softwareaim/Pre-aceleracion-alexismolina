@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.service;
+package com.alkemy.peliculas.controller.service;
 
 import com.alkemy.peliculas.dto.GeneroDTO;
 

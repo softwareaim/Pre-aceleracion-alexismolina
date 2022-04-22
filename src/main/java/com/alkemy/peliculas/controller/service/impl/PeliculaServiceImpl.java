@@ -1,5 +1,7 @@
-package com.alkemy.peliculas.service.impl;
+package com.alkemy.peliculas.controller.service.impl;
 
+import com.alkemy.peliculas.controller.service.PeliculaService;
+import com.alkemy.peliculas.controller.service.PersonajeService;
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
@@ -10,9 +12,8 @@ import com.alkemy.peliculas.mapper.PeliculaMapper;
 import com.alkemy.peliculas.repository.PeliculaRepository;
 import com.alkemy.peliculas.repository.PersonajeRepository;
 import com.alkemy.peliculas.repository.specifications.PeliculaSpecification;
-import com.alkemy.peliculas.service.PeliculaService;
-import com.alkemy.peliculas.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,15 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Autowired
     private PersonajeRepository personajeRepository;
 
+    @Value("${pelicula.addCharacterErrorMsj}")
+    private String addCharacterErrorMsj;
+
+    @Value("${pelicula.removeCharacterErrorMsj}")
+    private String removeCharacterErrorMsj;
+
+    @Value("${pelicula.idErrorMsj}")
+    private String idErrorMsj;
+
     @Transactional
     @Override
     public PeliculaDTO save(PeliculaDTO dto) {
@@ -48,31 +58,12 @@ public class PeliculaServiceImpl implements PeliculaService {
         return result;
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public PeliculaDTO findById(Long idPelicula) {
-        Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
-        if (!entity.isPresent()) {
-            throw new NotFoundException("id pelicula no valido");
-        }
-        PeliculaDTO dto = this.peliculaMapper.peliculaEntity2DTO(entity.get(), true);
-        return dto;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<PeliculaDTO> getAll() {
-        List<Pelicula> entities = this.peliculaRepository.findAll();
-        List<PeliculaDTO> dtos = this.peliculaMapper.peliculaEntitySet2DTOList(entities, true);
-        return dtos;
-    }
-
     @Transactional
     @Override
     public PeliculaDTO update(Long idPelicula, PeliculaBasicDTO basicDTO) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
-        if (entity.isPresent()) {
-            throw new NotFoundException("Pelicula no encontrada");
+        if (!entity.isPresent()) {
+            throw new NotFoundException(idErrorMsj + idPelicula);
         }
         this.peliculaMapper.peliculaEntityRefreshValues(entity.get(), basicDTO);
         Pelicula entitySaved = this.peliculaRepository.save(entity.get());
@@ -85,7 +76,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     public void delete(Long idPelicula) {
         Optional<Pelicula> entity = this.peliculaRepository.findById(idPelicula);
         if (entity.isPresent()) {
-            throw new NoSuchElementException("Pelicula no encontrada");
+            throw new NoSuchElementException(idErrorMsj + idPelicula);
         }
         this.peliculaRepository.delete(entity.get());
 
@@ -107,7 +98,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
         if (entityPersonaje == null || entityPelicula == null || entityPelicula.getPersonajes().contains(entityPersonaje) ) {
-            throw new NotFoundException("Error al agregar personaje");
+            throw new NotFoundException(addCharacterErrorMsj);
         }
         entityPelicula.getPersonajes().add(entityPersonaje);
 
@@ -124,7 +115,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
         if (entityPersonaje == null || entityPelicula == null) {
-            throw new NotFoundException("Error al remover personaje");
+            throw new NotFoundException(removeCharacterErrorMsj + idPersonaje);
         }
 
         Iterator<Personaje> it = entityPelicula.getPersonajes().iterator();

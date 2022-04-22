@@ -2,11 +2,10 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.service.PersonajeService;
+import com.alkemy.peliculas.controller.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,7 +38,7 @@ public class PersonajeController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<PersonajeDTO> update(@Valid @PathVariable Long id, @RequestBody PersonajeBasicDTO basicDTO){
+    ResponseEntity<PersonajeDTO> update(@Valid  @RequestBody PersonajeBasicDTO basicDTO, @PathVariable Long id){
 
         PersonajeDTO personajeDTO = this.personajeService.update(id, basicDTO);
         return ResponseEntity.ok().body(personajeDTO);
