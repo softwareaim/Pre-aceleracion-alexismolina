@@ -1,6 +1,6 @@
-package com.alkemy.peliculas.controller.service.impl;
+package com.alkemy.peliculas.service.impl;
 
-import com.alkemy.peliculas.controller.service.PersonajeService;
+import com.alkemy.peliculas.service.PersonajeService;
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;

@@ -1,7 +1,7 @@
-package com.alkemy.peliculas.controller.service.impl;
+package com.alkemy.peliculas.service.impl;
 
-import com.alkemy.peliculas.controller.service.PeliculaService;
-import com.alkemy.peliculas.controller.service.PersonajeService;
+import com.alkemy.peliculas.service.PeliculaService;
+import com.alkemy.peliculas.service.PersonajeService;
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -27,25 +26,19 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Autowired
     private PeliculaMapper peliculaMapper;
-
     @Autowired
     private PeliculaRepository peliculaRepository;
-
     @Autowired
     private PeliculaSpecification peliculaSpecification;
-
     @Autowired
     private PersonajeService personajeService;
-
     @Autowired
     private PersonajeRepository personajeRepository;
 
     @Value("${pelicula.addCharacterErrorMsj}")
     private String addCharacterErrorMsj;
-
     @Value("${pelicula.removeCharacterErrorMsj}")
     private String removeCharacterErrorMsj;
-
     @Value("${pelicula.idErrorMsj}")
     private String idErrorMsj;
 
@@ -79,7 +72,6 @@ public class PeliculaServiceImpl implements PeliculaService {
             throw new NoSuchElementException(idErrorMsj + idPelicula);
         }
         this.peliculaRepository.delete(entity.get());
-
     }
 
     @Transactional(readOnly = true)
@@ -93,7 +85,6 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     public PeliculaDTO addCharacter(Long idPelicula, Long idPersonaje) {
-
         Personaje entityPersonaje = personajeRepository.findById(idPersonaje).orElse(null);
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
@@ -104,29 +95,22 @@ public class PeliculaServiceImpl implements PeliculaService {
 
         Pelicula entitySaved = peliculaRepository.save(entityPelicula);
         PeliculaDTO result = peliculaMapper.peliculaEntity2DTO(entitySaved, true);
-
         return result;
     }
 
     @Override
     public PeliculaDTO removeCharacter(Long idPelicula, Long idPersonaje) {
-
         Personaje entityPersonaje = personajeRepository.findById(idPersonaje).orElse(null);
         Pelicula entityPelicula = peliculaRepository.findById(idPelicula).orElse(null);
 
         if (entityPersonaje == null || entityPelicula == null) {
             throw new NotFoundException(removeCharacterErrorMsj + idPersonaje);
         }
+        entityPelicula.getPersonajes().remove(entityPersonaje);
 
-        Iterator<Personaje> it = entityPelicula.getPersonajes().iterator();
-        while (it.hasNext()) {
-            if (it.next().equals(entityPersonaje)) {
-                it.remove();
-            }
-        }
         Pelicula entitySaved = peliculaRepository.save(entityPelicula);
         PeliculaDTO result = peliculaMapper.peliculaEntity2DTO(entitySaved, true);
         return result;
-
     }
+
 }

@@ -1,6 +1,6 @@
-package com.alkemy.peliculas.error;
+package com.alkemy.peliculas.controller;
 
-import com.alkemy.peliculas.error.dto.ApiErrorDTO;
+import com.alkemy.peliculas.dto.ApiErrorDTO;
 import com.alkemy.peliculas.error.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
     @ResponseBody
-    public ResponseEntity<ApiErrorDTO> notFoundRequest(Exception exception) {
+    public ResponseEntity<ApiErrorDTO> notFoundRequest(NotFoundException exception) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, exception);
     }
 
@@ -50,37 +50,31 @@ public class ApiExceptionHandler {
         return buildResponseEntity(httpStatus, new RuntimeException("Data enviada es invalida"), errors);
     }
 
-//    @ExceptionHandler
-//    protected ResponseEntity<ApiErrorDTO> generalException(Throwable exc) {
-//        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-//        return buildResponseEntity(httpStatus, exc);
-//    }
-
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler({ConflictException.class})
     @ResponseBody
-    public ResponseEntity<ApiErrorDTO> conflict(Exception exception) {
+    public ResponseEntity<ApiErrorDTO> conflict(ConflictException exception) {
         return buildResponseEntity(HttpStatus.CONFLICT, exception);
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({ForbiddenException.class})
     @ResponseBody
-    public ResponseEntity<ApiErrorDTO> forbidden(Exception exception) {
+    public ResponseEntity<ApiErrorDTO> forbidden(ForbiddenException exception) {
         return buildResponseEntity(HttpStatus.FORBIDDEN, exception);
     }
 
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
     @ExceptionHandler({BadGatewayException.class})
     @ResponseBody
-    public ResponseEntity<ApiErrorDTO> badGateway(Exception exception) {
+    public ResponseEntity<ApiErrorDTO> badGateway(BadGatewayException exception) {
         return buildResponseEntity(HttpStatus.BAD_GATEWAY, exception);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({Throwable.class})
     @ResponseBody
-    public ResponseEntity<ApiErrorDTO> exception(Exception exception) { // The error must be corrected
+    public ResponseEntity<ApiErrorDTO> Throwable(Throwable exception) { // The error must be corrected
         exception.printStackTrace();
         return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
@@ -95,7 +89,6 @@ public class ApiExceptionHandler {
         error.setStatus(httpStatus);
         error.setErrors(errors);
         return new ResponseEntity<>(error, httpStatus);
-
     }
 
 }

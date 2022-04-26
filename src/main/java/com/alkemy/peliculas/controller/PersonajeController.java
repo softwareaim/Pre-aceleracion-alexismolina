@@ -2,7 +2,7 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.controller.service.PersonajeService;
+import com.alkemy.peliculas.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.error.dto;
+package com.alkemy.peliculas.dto;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;

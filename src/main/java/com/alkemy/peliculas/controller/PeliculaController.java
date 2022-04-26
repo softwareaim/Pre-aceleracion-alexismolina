@@ -2,7 +2,7 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
-import com.alkemy.peliculas.controller.service.PeliculaService;
+import com.alkemy.peliculas.service.PeliculaService;
 import com.alkemy.peliculas.error.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

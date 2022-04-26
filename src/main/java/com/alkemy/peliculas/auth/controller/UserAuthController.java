@@ -5,6 +5,7 @@ import com.alkemy.peliculas.auth.dto.AuthenticationResponse;
 import com.alkemy.peliculas.auth.dto.UserDTO;
 import com.alkemy.peliculas.auth.service.JwtUtils;
 import com.alkemy.peliculas.auth.service.UserDetailsCustomService;
+import com.alkemy.peliculas.error.exception.BadRequestException;
 import com.alkemy.peliculas.error.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,8 +42,11 @@ public class UserAuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> singUp(@Valid @RequestBody UserDTO user) throws Exception {
+    public ResponseEntity<AuthenticationResponse> singUp(@Valid @RequestBody UserDTO user, BindingResult bindingResult) throws Exception {
 
+        if(bindingResult.hasErrors()){
+            throw new BadRequestException(bindingResult);
+        }
         this.userDetailsCustomService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

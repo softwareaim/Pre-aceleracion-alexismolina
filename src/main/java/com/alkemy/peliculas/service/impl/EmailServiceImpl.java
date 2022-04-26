@@ -1,6 +1,7 @@
-package com.alkemy.peliculas.builder;
+package com.alkemy.peliculas.service.impl;
 
-import com.alkemy.peliculas.controller.service.EmailService;
+import com.alkemy.peliculas.error.exception.UnauthorizedException;
+import com.alkemy.peliculas.service.EmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -27,21 +28,17 @@ public class EmailServiceImpl implements EmailService {
     @Value("${alkemy.challenge.email.enabled}")
     private Boolean enabled; //si esta en false corta la ejecucion del envio de mails
 
-    public void sendWelcomeEmailTo(String to) {
+    public void sendEmail(String subject, String to, String body) {
         if(!enabled){
-            return;
+            throw new UnauthorizedException("Envio de mail deshabilitado");
         }
-
-        String apiKey = env.getProperty("EMAIL_API_KEY"); // seteada en edit configurations..
-
+        String apiKey = env.getProperty("EMAIL_API_KEY_ALKEMY"); // seteada en edit configurations..
         Email fromEmail = new Email(emailSender); // le pasamos lo que tenemos configurado en el from
         Email toEmail = new Email(to); // se una clase mail con el destinatario como parametro
         Content content = new Content( // se inicializa el cuerpo y el sujeto del mensaje
                 "text/plain",
-                "Bienvenido/a a Alkemy Challenge"
+                body
         );//key y valor
-        String subject = "Alkemy Challenge"; // se define el sujeto
-
         Mail mail = new Mail(fromEmail, subject, toEmail, content); // crea el mail
         SendGrid sg = new SendGrid(apiKey);// se le pasa el apykey q tiene la cuenta relacionada con los permisos
         Request request = new Request();// request de sengrid
