@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.entity;
+package com.alkemy.peliculas.mapper.entity;
 
 import lombok.Getter;
 import lombok.Setter;

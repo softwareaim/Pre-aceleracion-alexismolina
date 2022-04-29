@@ -1,8 +1,7 @@
-package com.alkemy.peliculas.entity;
+package com.alkemy.peliculas.mapper.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -34,6 +33,7 @@ public class Personaje {
 
     private Boolean deleted = Boolean.FALSE;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "personajes",cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     private Set<Pelicula> peliculas = new HashSet<>();
 

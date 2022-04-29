@@ -36,8 +36,8 @@ public class EmailServiceImpl implements EmailService {
         Email fromEmail = new Email(emailSender); // le pasamos lo que tenemos configurado en el from
         Email toEmail = new Email(to); // se una clase mail con el destinatario como parametro
         Content content = new Content( // se inicializa el cuerpo y el sujeto del mensaje
-                "text/plain",
-                body
+                "text/html",
+                "<a href=\"https://www.google.com\" target=\"_self\">ir a google _self</a>"
         );//key y valor
         Mail mail = new Mail(fromEmail, subject, toEmail, content); // crea el mail
         SendGrid sg = new SendGrid(apiKey);// se le pasa el apykey q tiene la cuenta relacionada con los permisos

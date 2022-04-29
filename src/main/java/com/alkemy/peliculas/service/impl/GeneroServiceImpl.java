@@ -2,7 +2,7 @@ package com.alkemy.peliculas.service.impl;
 
 import com.alkemy.peliculas.service.GeneroService;
 import com.alkemy.peliculas.dto.GeneroDTO;
-import com.alkemy.peliculas.entity.Genero;
+import com.alkemy.peliculas.mapper.entity.Genero;
 import com.alkemy.peliculas.mapper.GeneroMapper;
 import com.alkemy.peliculas.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;

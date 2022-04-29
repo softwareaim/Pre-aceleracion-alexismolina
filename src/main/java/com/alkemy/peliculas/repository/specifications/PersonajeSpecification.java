@@ -1,8 +1,8 @@
 package com.alkemy.peliculas.repository.specifications;
 
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
-import com.alkemy.peliculas.entity.Pelicula;
-import com.alkemy.peliculas.entity.Personaje;
+import com.alkemy.peliculas.mapper.entity.Pelicula;
+import com.alkemy.peliculas.mapper.entity.Personaje;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -32,6 +32,7 @@ public class PersonajeSpecification {
                 );
 
             }
+
             if (filtersDTO.getAge() != null) { // pregunto si tiene algo
                 predicates.add(  // si tiene lo agrago al predicado
                         criteriaBuilder.equal(root.get("edad"), filtersDTO.getAge())

@@ -1,17 +1,14 @@
 package com.alkemy.peliculas.mapper;
 
-import com.alkemy.peliculas.dto.PeliculaBasicDTO;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.entity.Pelicula;
-import com.alkemy.peliculas.entity.Personaje;
+import com.alkemy.peliculas.mapper.entity.Pelicula;
+import com.alkemy.peliculas.mapper.entity.Personaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-
-import static com.alkemy.peliculas.mapper.util.UtilDate.string2LocalDate;
 
 @Component
 public class PersonajeMapper {
@@ -93,5 +90,16 @@ public class PersonajeMapper {
         entity.setHistoria(dto.getHistoria());
         entity.setPeso(dto.getPeso());
 
+    }
+
+    public PersonajeBasicDTO personajeEntit2PersonajeBasicDTO(Personaje entity){
+        PersonajeBasicDTO result = new PersonajeBasicDTO();
+        result.setImagen(entity.getImagen());
+        result.setNombre(entity.getNombre());
+        result.setId(entity.getId());
+        result.setEdad(entity.getEdad());
+        result.setHistoria(entity.getHistoria());
+        result.setPeso(entity.getPeso());
+        return result;
     }
 }

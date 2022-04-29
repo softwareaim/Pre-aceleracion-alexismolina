@@ -1,6 +1,6 @@
 package com.alkemy.peliculas.repository;
 
-import com.alkemy.peliculas.entity.Pelicula;
+import com.alkemy.peliculas.mapper.entity.Pelicula;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -12,4 +12,8 @@ import java.util.List;
 public interface PeliculaRepository extends JpaRepository<Pelicula, Long>, JpaSpecificationExecutor<Pelicula> {
 
     List<Pelicula> findAll(Specification<Pelicula> spec);
+
+
+
+
 }

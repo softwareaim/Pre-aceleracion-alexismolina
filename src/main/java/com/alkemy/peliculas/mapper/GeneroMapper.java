@@ -1,11 +1,8 @@
 package com.alkemy.peliculas.mapper;
 
 import com.alkemy.peliculas.dto.GeneroDTO;
-import com.alkemy.peliculas.entity.Genero;
+import com.alkemy.peliculas.mapper.entity.Genero;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class GeneroMapper {
