@@ -1,7 +1,7 @@
 package com.alkemy.peliculas.mapper;
 
 import com.alkemy.peliculas.dto.GeneroDTO;
-import com.alkemy.peliculas.mapper.entity.Genero;
+import com.alkemy.peliculas.entity.Genero;
 import org.springframework.stereotype.Component;
 
 @Component

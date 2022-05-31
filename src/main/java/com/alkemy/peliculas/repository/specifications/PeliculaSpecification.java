@@ -1,8 +1,8 @@
 package com.alkemy.peliculas.repository.specifications;
 
 import com.alkemy.peliculas.dto.filters.PeliculaFiltersDTO;
-import com.alkemy.peliculas.mapper.entity.Genero;
-import com.alkemy.peliculas.mapper.entity.Pelicula;
+import com.alkemy.peliculas.entity.Genero;
+import com.alkemy.peliculas.entity.Pelicula;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

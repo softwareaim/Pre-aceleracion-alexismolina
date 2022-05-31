@@ -1,6 +1,6 @@
 package com.alkemy.peliculas.repository;
 
-import com.alkemy.peliculas.mapper.entity.Personaje;
+import com.alkemy.peliculas.entity.Personaje;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,5 +1,7 @@
 package com.alkemy.peliculas.auth.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
 public class UserEntity implements UserDetails {
@@ -28,7 +32,7 @@ public class UserEntity implements UserDetails {
     @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"),
     uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "role_id"})})
-    private Set<RoleEntity> roles;
+    private Collection<RoleEntity> roles;
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;

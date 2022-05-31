@@ -3,8 +3,8 @@ package com.alkemy.peliculas.mapper;
 import com.alkemy.peliculas.dto.PeliculaDTO;
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.mapper.entity.Pelicula;
-import com.alkemy.peliculas.mapper.entity.Personaje;
+import com.alkemy.peliculas.entity.Pelicula;
+import com.alkemy.peliculas.entity.Personaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

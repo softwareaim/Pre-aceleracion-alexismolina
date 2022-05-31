@@ -2,7 +2,7 @@ package com.alkemy.peliculas.service;
 
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.mapper.entity.Personaje;
+import com.alkemy.peliculas.entity.Personaje;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;

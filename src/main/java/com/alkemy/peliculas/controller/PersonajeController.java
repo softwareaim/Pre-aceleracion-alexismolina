@@ -2,10 +2,8 @@ package com.alkemy.peliculas.controller;
 
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
-import com.alkemy.peliculas.mapper.entity.Personaje;
+import com.alkemy.peliculas.entity.Personaje;
 import com.alkemy.peliculas.service.PersonajeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;

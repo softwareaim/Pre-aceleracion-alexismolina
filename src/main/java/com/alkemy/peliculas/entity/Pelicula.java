@@ -1,4 +1,4 @@
-package com.alkemy.peliculas.mapper.entity;
+package com.alkemy.peliculas.entity;
 
 import lombok.Data;
 

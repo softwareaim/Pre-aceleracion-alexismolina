@@ -4,7 +4,7 @@ import com.alkemy.peliculas.service.PersonajeService;
 import com.alkemy.peliculas.dto.PersonajeBasicDTO;
 import com.alkemy.peliculas.dto.PersonajeDTO;
 import com.alkemy.peliculas.dto.filters.PersonajeFiltersDTO;
-import com.alkemy.peliculas.mapper.entity.Personaje;
+import com.alkemy.peliculas.entity.Personaje;
 import com.alkemy.peliculas.error.exception.NotFoundException;
 import com.alkemy.peliculas.mapper.PersonajeMapper;
 import com.alkemy.peliculas.repository.PersonajeRepository;
